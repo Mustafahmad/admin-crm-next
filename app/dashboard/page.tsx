@@ -1,23 +1,25 @@
-import StatCard from "@/components/StatCard";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    redirect("/login");
+  }
+
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+      <h1 className="text-2xl font-bold">
+        Dashboard
+      </h1>
 
-        <p className="text-gray-500 mt-1">Welcome back, Admin.</p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard title="Customers" value="1,248" />
-
-        <StatCard title="Leads" value="342" />
-
-        <StatCard title="Users" value="24" />
-
-        <StatCard title="Deals" value="86" />
-      </div>
+      <p className="text-gray-500 mt-2">
+        Welcome, {session.user.name}
+      </p>
     </div>
   );
 }
