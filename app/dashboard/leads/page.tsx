@@ -1,8 +1,10 @@
 export default function Leads() {
   return (
-    <main>
-      <h1>Leads</h1>
-      <p>Where the Leads will be listed</p>
-    </main>
+    <div>
+      <h1 className="text-3xl font-semibold tracking-tight text-foreground">
+        Leads
+      </h1>
+      <p className="mt-2 text-muted">Pipeline leads will appear here.</p>
+    </div>
   );
 }

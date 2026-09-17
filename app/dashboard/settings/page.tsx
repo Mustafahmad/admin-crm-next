@@ -1,8 +1,10 @@
 export default function Settings() {
   return (
-    <main>
-      <h1>Settings</h1>
-      <p>This is the settings page.</p>
-    </main>
+    <div>
+      <h1 className="text-3xl font-semibold tracking-tight text-foreground">
+        Settings
+      </h1>
+      <p className="mt-2 text-muted">Workspace and account preferences.</p>
+    </div>
   );
 }

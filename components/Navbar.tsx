@@ -1,15 +1,13 @@
 export default function Navbar() {
-    return (
-      <header className="h-16 border-b bg-white flex items-center justify-between px-6">
-        <h2 className="text-lg font-semibold text-gray-900">
-          Dashboard
-        </h2>
-  
-        <div>
-          <span className="text-sm text-gray-600">
-            Admin
-          </span>
-        </div>
-      </header>
-    );
-  }
+  return (
+    <header className="flex h-16 items-center justify-between border-b border-border bg-surface px-6">
+      <h2 className="text-sm font-medium uppercase tracking-wider text-muted">
+        Overview
+      </h2>
+
+      <span className="rounded-md border border-border bg-surface-raised px-3 py-1.5 text-sm text-foreground">
+        Admin
+      </span>
+    </header>
+  );
+}
