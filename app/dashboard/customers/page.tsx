@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
+import { Customer } from "@prisma/client";
 
 export default async function CustomersPage() {
   const customers = await prisma.customer.findMany({
@@ -40,11 +41,14 @@ export default async function CustomersPage() {
               <th className="px-6 py-3 text-left text-sm font-medium text-muted">
                 Created
               </th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-muted">
+                Actions
+              </th>
             </tr>
           </thead>
 
           <tbody className="divide-y divide-border">
-            {customers.map((customer) => (
+            {customers.map((customer: Customer) => (
               <tr key={customer.id}>
                 <td className="px-6 py-4 text-sm font-medium text-foreground">
                   {customer.name}
@@ -56,6 +60,20 @@ export default async function CustomersPage() {
 
                 <td className="px-6 py-4 text-sm text-muted">
                   {customer.createdAt.toLocaleDateString()}
+                </td>
+                <td className="px-6 py-4 text-sm">
+                  <Link
+                    href={`/dashboard/customers/${customer.id}/edit`}
+                    className="mr-2 font-medium text-accent hover:underline"
+                  >
+                    Edit
+                  </Link>
+                  <Link
+                    href={`/dashboard/customers/${customer.id}`}
+                    className="font-medium text-accent hover:underline"
+                  >
+                    View
+                  </Link>
                 </td>
               </tr>
             ))}

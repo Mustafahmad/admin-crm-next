@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const createCustomerSchema = z.object({
+export const customerSchema = z.object({
   name: z
     .string()
     .trim()
@@ -13,4 +13,5 @@ export const createCustomerSchema = z.object({
     .email("Please enter a valid email address."),
 });
 
-export type CreateCustomerInput = z.infer<typeof createCustomerSchema>;
+export const createCustomerSchema = customerSchema;
+export const updateCustomerSchema = customerSchema;
