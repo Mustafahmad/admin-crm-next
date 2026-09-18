@@ -24,6 +24,24 @@ export async function getCustomerById(id: string) {
   });
 }
 
+export async function listCustomers(search?: string) {
+  const query = search?.trim();
+
+  return prisma.customer.findMany({
+    where: query
+      ? {
+          OR: [
+            { name: { contains: query, mode: "insensitive" } },
+            { email: { contains: query, mode: "insensitive" } },
+          ],
+        }
+      : undefined,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}
+
 export async function createCustomer(
   data: CustomerInput
 ): Promise<CustomerWriteResult> {
