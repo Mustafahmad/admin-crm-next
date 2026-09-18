@@ -2,20 +2,25 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { createCustomerSchema } from "@/lib/validations/customer";
 import { redirect } from "next/navigation";
 
 export async function createCustomer(formData: FormData) {
-  const name = formData.get("name");
-  const email = formData.get("email");
+  const validatedFields = createCustomerSchema.safeParse({
+    name: formData.get("name"),
+    email: formData.get("email"),
+  });
 
-  if (!name || !email) {
-    throw new Error("Name and email are required.");
+  if (!validatedFields.success) {
+    return {
+      error: validatedFields.error.flatten().fieldErrors,
+    };
   }
 
   await prisma.customer.create({
     data: {
-      name: String(name),
-      email: String(email),
+      name: validatedFields.data.name,
+      email: validatedFields.data.email,
     },
   });
 

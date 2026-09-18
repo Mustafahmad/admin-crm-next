@@ -2,26 +2,34 @@
 
 import { createCustomer } from "@/app/dashboard/customers/actions";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+type FormErrors = {
+  name?: string[];
+  email?: string[];
+};
 
 export default function CustomerForm() {
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const router = useRouter();
+  async function handleSubmit(formData: FormData) {
+    setLoading(true);
+    setErrors({});
+
+    const result = await createCustomer(formData);
+
+    if (result?.error) {
+      setErrors(result.error);
+    } else {
+      router.push("/dashboard/customers");
+    }
+
+    setLoading(false);
+  }
 
   return (
-    <form
-      action={async (formData) => {
-        setLoading(true);
-
-        try {
-          await createCustomer(formData);
-        } catch (error) {
-          console.error(error);
-          setLoading(false);
-        } finally {
-          setLoading(false);
-        }
-      }}
-      className="space-y-6"
-    >
+    <form action={handleSubmit} className="space-y-6">
       <div>
         <label
           htmlFor="name"
@@ -35,9 +43,14 @@ export default function CustomerForm() {
           name="name"
           type="text"
           placeholder="John Doe"
-          required
           className="w-full rounded-md border border-border bg-surface-raised px-4 py-2.5 text-foreground outline-none placeholder:text-muted focus:border-accent focus:ring-1 focus:ring-accent"
         />
+
+        {errors.name && (
+          <p className="mt-1 text-sm text-danger">
+            {errors.name[0]}
+          </p>
+        )}
       </div>
 
       <div>
@@ -53,9 +66,14 @@ export default function CustomerForm() {
           name="email"
           type="email"
           placeholder="john@example.com"
-          required
           className="w-full rounded-md border border-border bg-surface-raised px-4 py-2.5 text-foreground outline-none placeholder:text-muted focus:border-accent focus:ring-1 focus:ring-accent"
         />
+
+        {errors.email && (
+          <p className="mt-1 text-sm text-danger">
+            {errors.email[0]}
+          </p>
+        )}
       </div>
 
       <div className="flex justify-end">
