@@ -63,3 +63,9 @@ export async function updateCustomer(
     throw error;
   }
 }
+
+export async function deleteCustomer(id: string) {
+  await prisma.customer.delete({
+    where: { id },
+  });
+}

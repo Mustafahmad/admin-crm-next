@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import { Customer } from "@prisma/client";
+import { deleteCustomer } from "@/app/dashboard/customers/actions";
 
 export default async function CustomersPage() {
   const customers = await prisma.customer.findMany({
@@ -14,7 +14,6 @@ export default async function CustomersPage() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-foreground">Customers</h1>
-
           <p className="mt-1 text-muted">Manage your CRM customers.</p>
         </div>
 
@@ -33,11 +32,9 @@ export default async function CustomersPage() {
               <th className="px-6 py-3 text-left text-sm font-medium text-muted">
                 Name
               </th>
-
               <th className="px-6 py-3 text-left text-sm font-medium text-muted">
                 Email
               </th>
-
               <th className="px-6 py-3 text-left text-sm font-medium text-muted">
                 Created
               </th>
@@ -48,32 +45,37 @@ export default async function CustomersPage() {
           </thead>
 
           <tbody className="divide-y divide-border">
-            {customers.map((customer: Customer) => (
+            {customers.map((customer) => (
               <tr key={customer.id}>
                 <td className="px-6 py-4 text-sm font-medium text-foreground">
                   {customer.name}
                 </td>
-
-                <td className="px-6 py-4 text-sm text-muted">
-                  {customer.email}
-                </td>
-
+                <td className="px-6 py-4 text-sm text-muted">{customer.email}</td>
                 <td className="px-6 py-4 text-sm text-muted">
                   {customer.createdAt.toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 text-sm">
                   <Link
                     href={`/dashboard/customers/${customer.id}/edit`}
-                    className="mr-2 font-medium text-accent hover:underline"
+                    className="mr-3 font-medium text-accent hover:underline"
                   >
                     Edit
                   </Link>
                   <Link
                     href={`/dashboard/customers/${customer.id}`}
-                    className="font-medium text-accent hover:underline"
+                    className="mr-3 font-medium text-accent hover:underline"
                   >
                     View
                   </Link>
+                  <form action={deleteCustomer} className="inline">
+                    <input type="hidden" name="id" value={customer.id} />
+                    <button
+                      type="submit"
+                      className="font-medium text-danger hover:underline"
+                    >
+                      Delete
+                    </button>
+                  </form>
                 </td>
               </tr>
             ))}
