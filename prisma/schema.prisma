@@ -13,15 +13,42 @@ model User {
   email         String
   emailVerified Boolean   @default(false)
   image         String?
-  role          String    @default("admin")
+  roleId        String    @default("role_admin")
+  role          Role      @relation(fields: [roleId], references: [id])
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
 
   @@unique([email])
+  @@index([roleId])
   @@map("user")
 }
+
+model Role {
+  id          String           @id @default(cuid())
+  name        String           @unique
+  users       User[]
+  permissions RolePermission[]
+}
+
+model Permission {
+  id    String           @id @default(cuid())
+  name  String           @unique
+  roles RolePermission[]
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@index([permissionId])
+}
+
 
 model Session {
   id        String   @id
