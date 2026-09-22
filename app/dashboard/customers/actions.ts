@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { customerSchema } from "@/lib/validations/customer";
 import * as customerService from "@/services/customer.service";
+import { requirePermission } from "@/lib/authorization";
 
 export async function createCustomer(formData: FormData) {
   const validated = customerSchema.safeParse({
@@ -48,8 +49,12 @@ export async function editCustomer(id: string, formData: FormData) {
 
 export async function deleteCustomer(formData: FormData) {
   const id = String(formData.get("id") ?? "");
+
   if (!id) return;
 
+  await requirePermission("customers.delete");
+
   await customerService.deleteCustomer(id);
+
   revalidatePath("/dashboard/customers");
 }
