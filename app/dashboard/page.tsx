@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import StatCard from "@/components/StatCard";
-import prisma from "@/lib/prisma";
+import { getDashboardStats } from "@/services/dashboard.service";
 
 export default async function DashboardPage() {
   const session = await auth.api.getSession({
@@ -13,9 +13,7 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  const customers = await prisma.customer.count();
-  const users = await prisma.user.count();
-
+  const stats = await getDashboardStats();
 
   return (
     <div className="space-y-8">
@@ -30,9 +28,9 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard title="Total customers" value={customers.toString()} />
+        <StatCard title="Total customers" value={stats.customers.toString()} />
         <StatCard title="Open leads" value="0" />
-        <StatCard title="Active users" value={users.toString()} />
+        <StatCard title="Active users" value={stats.users.toString()} />
         <StatCard title="Conversion" value="—" />
       </div>
     </div>

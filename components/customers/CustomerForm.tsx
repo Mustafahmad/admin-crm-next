@@ -1,7 +1,11 @@
 "use client";
 
-import { createCustomer, editCustomer } from "@/app/dashboard/customers/actions";
-import { useState } from "react";
+import {
+  createCustomer,
+  editCustomer,
+} from "@/app/dashboard/customers/actions";
+import SubmitButton from "./SubmitButton";
+import { useActionState } from "react";
 
 type Customer = {
   id: string;
@@ -9,9 +13,12 @@ type Customer = {
   email: string;
 };
 
-type FormErrors = {
-  name?: string[];
-  email?: string[];
+type FormState = {
+  errors?: {
+    name?: string[];
+    email?: string[];
+  };
+  message?: string;
 };
 
 type CustomerFormProps = {
@@ -19,33 +26,24 @@ type CustomerFormProps = {
   mode?: "create" | "edit";
 };
 
+const initialState: FormState = {
+  errors: {},
+  message: "",
+};
+
 export default function CustomerForm({
   customer,
   mode = "create",
 }: CustomerFormProps) {
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<FormErrors>({});
+  const action =
+    mode === "edit" && customer
+      ? editCustomer.bind(null, customer.id)
+      : createCustomer;
 
-  async function handleSubmit(formData: FormData) {
-    setLoading(true);
-    setErrors({});
-
-    try {
-      const result =
-        mode === "edit" && customer
-          ? await editCustomer(customer.id, formData)
-          : await createCustomer(formData);
-
-      if (result && "errors" in result) {
-        setErrors(result.errors);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
+  const [state, formAction] = useActionState(action, initialState);
 
   return (
-    <form action={handleSubmit} className="space-y-6">
+    <form action={formAction} className="space-y-6">
       <div>
         <label
           htmlFor="name"
@@ -63,10 +61,8 @@ export default function CustomerForm({
           className="w-full rounded-md border border-border bg-surface-raised px-4 py-2.5 text-foreground outline-none placeholder:text-muted focus:border-accent focus:ring-1 focus:ring-accent"
         />
 
-        {errors.name && (
-          <p className="mt-1 text-sm text-danger">
-            {errors.name[0]}
-          </p>
+        {state.errors?.name && (
+          <p className="mt-1 text-sm text-danger">{state.errors.name[0]}</p>
         )}
       </div>
 
@@ -87,21 +83,16 @@ export default function CustomerForm({
           className="w-full rounded-md border border-border bg-surface-raised px-4 py-2.5 text-foreground outline-none placeholder:text-muted focus:border-accent focus:ring-1 focus:ring-accent"
         />
 
-        {errors.email && (
-          <p className="mt-1 text-sm text-danger">
-            {errors.email[0]}
-          </p>
+        {state.errors?.email && (
+          <p className="mt-1 text-sm text-danger">{state.errors.email[0]}</p>
+        )}
+        {state.message && (
+          <p className="text-sm text-danger">{state.message}</p>
         )}
       </div>
 
       <div className="flex justify-end">
-        <button
-          type="submit"
-          disabled={loading}
-          className="rounded-md bg-accent-strong px-5 py-2.5 font-medium text-background transition-colors hover:bg-accent disabled:opacity-50"
-        >
-          {loading ? "Saving..." : mode === "edit" ? "Save Changes" : "Create Customer"}
-        </button>
+        <SubmitButton mode={mode} />
       </div>
     </form>
   );

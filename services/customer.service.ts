@@ -30,11 +30,11 @@ export async function listCustomers(search?: string) {
   return prisma.customer.findMany({
     where: query
       ? {
-          OR: [
-            { name: { contains: query, mode: "insensitive" } },
-            { email: { contains: query, mode: "insensitive" } },
-          ],
-        }
+        OR: [
+          { name: { contains: query, mode: "insensitive" } },
+          { email: { contains: query, mode: "insensitive" } },
+        ],
+      }
       : undefined,
     orderBy: {
       createdAt: "desc",
