@@ -1,18 +1,17 @@
-import DashboardStats from "@/components/dashboard/DashboardStats";
+import DashboardContent from "@/components/dashboard/DashboardContent";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-function DashboardStatsFallback() {
+function DashboardContentFallback() {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {Array.from({ length: 4 }).map((_, index) => (
-        <div
-          key={index}
-          className="h-28 animate-pulse rounded-lg bg-surface-raised"
-        />
-      ))}
+    <div className="space-y-6">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {Array.from({ length: 4 }).map((_, index) => (
+          <div key={index} className="h-28 animate-pulse rounded-lg bg-surface-raised" />
+        ))}
+      </div>
     </div>
   );
 }
@@ -39,8 +38,8 @@ export default async function DashboardPage() {
         </p>
       </div>
 
-      <Suspense fallback={<DashboardStatsFallback />}>
-        <DashboardStats />
+      <Suspense fallback={<DashboardContentFallback />}>
+        <DashboardContent />
       </Suspense>
     </div>
   );

@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { Customer } from "@prisma/client";
 import { cacheLife, cacheTag } from "next/cache";
 
 type DashboardStats = {
@@ -17,4 +18,19 @@ export async function getDashboardStats(): Promise<DashboardStats> {
         customers,
         users,
     };
+}
+
+export async function getRecentCustomers() {
+
+    try {
+        const customers = await prisma.customer.findMany({
+            orderBy: {
+                createdAt: "desc",
+            },
+            take: 5,
+        });
+        return customers;
+    } catch (error) {
+        throw error;
+    }
 }
