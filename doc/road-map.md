@@ -740,20 +740,3 @@ Rather than learning these in a random order, I'd use your CRM as the curriculum
 | 22    | Testing                           | ⏭️     |
 | 23    | Deployment                        | ⏭️     |
 | 24    | Production architecture           | ⏭️     |
-
-### And I would add one rule to our learning process:
-
-**You implement first. I review second.**
-
-So instead of me giving you:
-
-> "Here's how to implement X."
-
-I'll increasingly give you:
-
-> **Problem:** Build X.
-> **Constraints:** Use Server Actions + Prisma + RBAC.
-> **Your task:** Design and implement it.
-> **Then:** Send me your code and I'll review it.
-
-That will get you from *knowing Next.js concepts* to actually being able to **architect a production Next.js application**.

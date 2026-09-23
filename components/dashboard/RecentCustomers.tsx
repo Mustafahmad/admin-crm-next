@@ -1,6 +1,8 @@
-import { Customer } from "@prisma/client";
+import { getRecentCustomers } from "@/services/dashboard.service";
 
-export default function RecentCustomers({ customers }: { customers: Customer[] }) {
+
+export async function RecentCustomers() {
+  const customers = await getRecentCustomers();
   return (
     <div className="space-y-6">
       <h2 className="text-lg font-medium text-foreground">Recent customers</h2>
