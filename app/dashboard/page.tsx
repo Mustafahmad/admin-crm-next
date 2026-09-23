@@ -1,9 +1,21 @@
+import DashboardStats from "@/components/dashboard/DashboardStats";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import StatCard from "@/components/StatCard";
-import { getDashboardStats } from "@/services/dashboard.service";
+import { Suspense } from "react";
 
+function DashboardStatsFallback() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      {Array.from({ length: 4 }).map((_, index) => (
+        <div
+          key={index}
+          className="h-28 animate-pulse rounded-lg bg-surface-raised"
+        />
+      ))}
+    </div>
+  );
+}
 export default async function DashboardPage() {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -13,8 +25,6 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  const stats = await getDashboardStats();
-
   return (
     <div className="space-y-8">
       <div>
@@ -23,16 +33,15 @@ export default async function DashboardPage() {
         </h1>
         <p className="mt-2 text-base text-muted">
           Welcome back,{" "}
-          <span className="font-medium text-foreground">{session.user.name}</span>
+          <span className="font-medium text-foreground">
+            {session.user.name}
+          </span>
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard title="Total customers" value={stats.customers.toString()} />
-        <StatCard title="Open leads" value="0" />
-        <StatCard title="Active users" value={stats.users.toString()} />
-        <StatCard title="Conversion" value="—" />
-      </div>
+      <Suspense fallback={<DashboardStatsFallback />}>
+        <DashboardStats />
+      </Suspense>
     </div>
   );
 }
