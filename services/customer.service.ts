@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { cache } from "react";
 
 type CustomerInput = {
   name: string;
@@ -18,11 +19,13 @@ function isEmailUniqueViolation(error: unknown) {
   );
 }
 
-export async function getCustomerById(id: string) {
+export const getCustomerById = cache(async (id: string) => {
+  console.log("Fetching customer:", id);
   return prisma.customer.findUnique({
     where: { id },
   });
-}
+  
+});
 
 export async function listCustomers(search?: string) {
   const query = search?.trim();
