@@ -1,8 +1,5 @@
 import { DashboardStats } from "@/components/dashboard/DashboardStats";
 import { RecentCustomers } from "@/components/dashboard/RecentCustomers";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 function DashboardFallback() {
@@ -41,13 +38,6 @@ function RecentCustomersFallback() {
   );
 }
 export default async function DashboardPage() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!session) {
-    redirect("/login");
-  }
 
   return (
     <div className="space-y-8">
@@ -58,7 +48,7 @@ export default async function DashboardPage() {
         <p className="mt-2 text-base text-muted">
           Welcome back,{" "}
           <span className="font-medium text-foreground">
-            {session.user.name}
+            Guest User
           </span>
         </p>
       </div>

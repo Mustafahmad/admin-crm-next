@@ -1,12 +1,10 @@
-let attempts = 0;
-
 export default async function CustomerActivity() {
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
-  attempts++;
+  const shouldFail = Math.random() > 0.5;
 
-  if (attempts === 1) {
-    throw new Error("Failed to load customer activity");
+  if (shouldFail) {
+    throw new Error("Customer activity failed to load");
   }
 
   return (
