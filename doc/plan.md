@@ -42,6 +42,8 @@ The remaining days are not necessarily calendar days. A difficult topic can take
 - [x] `usePathname`
 - [x] Route organization
 
+
+
 ### CRM Implementation
 
 ```text
@@ -52,15 +54,23 @@ The remaining days are not necessarily calendar days. A difficult topic can take
 /dashboard/customers/[id]/edit
 ```
 
+
+
 ### Status
 
 **COMPLETE**
 
 ---
 
+
+
 # DAY 2 — Server & Client Components
 
+
+
 # COMPLETED
+
+
 
 ### Completed
 
@@ -72,6 +82,8 @@ The remaining days are not necessarily calendar days. A difficult topic can take
 - [x] Reusable components
 - [x] Server → Client component boundaries
 - [x] Keeping data fetching on the server
+
+
 
 ### CRM Implementation
 
@@ -86,15 +98,23 @@ CustomerSearch
 SubmitButton
 ```
 
+
+
 ### Status
 
 **COMPLETE**
 
 ---
 
+
+
 # DAY 3 — Prisma & Database CRUD
 
+
+
 # COMPLETED
+
+
 
 ### Completed
 
@@ -112,6 +132,8 @@ SubmitButton
 - [x] Unique constraints
 - [x] Handling Prisma errors
 
+
+
 ### CRM Implementation
 
 Customer CRUD.
@@ -122,9 +144,15 @@ Customer CRUD.
 
 ---
 
+
+
 # DAY 4 — Service Layer
 
+
+
 # COMPLETED
+
+
 
 ### Completed
 
@@ -134,6 +162,8 @@ Customer CRUD.
 - [x] `dashboard.service.ts`
 - [x] Reusable database operations
 - [x] Keeping components thin
+
+
 
 ### Architecture
 
@@ -147,15 +177,23 @@ Prisma
 PostgreSQL
 ```
 
+
+
 ### Status
 
 **COMPLETE**
 
 ---
 
+
+
 # DAY 5 — Server Actions & Forms
 
+
+
 # COMPLETED
+
+
 
 ### Completed
 
@@ -172,6 +210,8 @@ PostgreSQL
 - [x] `revalidatePath()`
 - [x] Server Action authorization
 
+
+
 ### CRM Implementation
 
 Customer create/edit/delete.
@@ -182,9 +222,15 @@ Customer create/edit/delete.
 
 ---
 
+
+
 # DAY 6 — Zod Validation
 
+
+
 # COMPLETED
+
+
 
 ### Completed
 
@@ -194,6 +240,8 @@ Customer create/edit/delete.
 - [x] Validation error handling
 - [x] Server-side validation
 - [x] Combining Zod with Server Actions
+
+
 
 ### CRM Implementation
 
@@ -212,9 +260,15 @@ including duplicate email handling.
 
 ---
 
+
+
 # DAY 7 — Search & Pagination
 
+
+
 # COMPLETED
+
+
 
 ### Completed
 
@@ -228,6 +282,8 @@ including duplicate email handling.
 - [x] Case-insensitive search
 - [x] Server-side filtering
 
+
+
 ### CRM Implementation
 
 Customer search and pagination.
@@ -238,9 +294,15 @@ Customer search and pagination.
 
 ---
 
+
+
 # DAY 8 — Loading, Errors & Not Found
 
+
+
 # MOSTLY COMPLETED
+
+
 
 ### Completed
 
@@ -252,11 +314,15 @@ Customer search and pagination.
 - [x] Server-side not-found handling
 - [x] Basic error boundaries
 
+
+
 ### Currently Learning
 
 - [x] `reset()`
 - [x] Error recovery
-- [ ] Local component-level error boundary
+- [x] Local component-level error boundary
+
+
 
 ### Status
 
@@ -264,9 +330,15 @@ Customer search and pagination.
 
 ---
 
+
+
 # DAY 9 — Authentication
 
+
+
 # COMPLETED
+
+
 
 ### Completed
 
@@ -280,6 +352,8 @@ Customer search and pagination.
 - [x] Auth client
 - [x] Redirect unauthenticated users
 
+
+
 ### CRM Implementation
 
 ```text
@@ -287,15 +361,23 @@ Customer search and pagination.
 /dashboard
 ```
 
+
+
 ### Status
 
 **COMPLETE**
 
 ---
 
+
+
 # DAY 10 — Authorization & RBAC
 
+
+
 # COMPLETED
+
+
 
 ### Completed
 
@@ -309,6 +391,8 @@ Customer search and pagination.
 - [x] Authorization inside Server Actions
 - [x] UI permission concepts
 
+
+
 ### Roles
 
 ```text
@@ -316,6 +400,8 @@ Admin
 Manager
 Viewer
 ```
+
+
 
 ### Example permissions
 
@@ -326,13 +412,19 @@ customer.update
 customer.delete
 ```
 
+
+
 ### Status
 
 **COMPLETE**
 
 ---
 
+
+
 # DAY 11 — Next.js Caching
+
+
 
 # COMPLETED
 
@@ -351,6 +443,8 @@ This was a major module and should NOT be repeated.
 - [x] Stale/revalidation concepts
 - [x] Cached dashboard statistics
 - [x] Keeping customer list fresh
+
+
 
 ### CRM Implementation
 
@@ -376,15 +470,23 @@ cache()
 Request-level deduplication
 ```
 
+
+
 ### Status
 
 **COMPLETE**
 
 ---
 
+
+
 # DAY 12 — Parallel Data Fetching
 
+
+
 # COMPLETED
+
+
 
 ### Completed
 
@@ -393,6 +495,8 @@ Request-level deduplication
 - [x] `Promise.all()`
 - [x] Independent database queries
 - [x] Avoiding unnecessary waterfalls
+
+
 
 ### CRM Implementation
 
@@ -405,15 +509,23 @@ const [stats, customers] = await Promise.all([
 ]);
 ```
 
+
+
 ### Status
 
 **COMPLETE**
 
 ---
 
+
+
 # DAY 13 — Suspense & Streaming
 
+
+
 # COMPLETED
+
+
 
 ### Completed
 
@@ -424,6 +536,8 @@ const [stats, customers] = await Promise.all([
 - [x] Component-level loading
 - [x] Server Components + Suspense
 - [x] Slow component simulation
+
+
 
 ### CRM Implementation
 
@@ -445,15 +559,23 @@ Customer Activity
 independent streaming
 ```
 
+
+
 ### Status
 
 **COMPLETE**
 
 ---
 
+
+
 # DAY 14 — React `cache()`
 
+
+
 # COMPLETED
+
+
 
 ### Completed
 
@@ -463,6 +585,8 @@ independent streaming
 - [x] Difference between `cache()` and `"use cache"`
 - [x] Sharing server data requests
 - [x] Data ownership
+
+
 
 ### CRM Implementation
 
@@ -474,15 +598,23 @@ export const getCustomerById = cache(async (id: string) => {
 });
 ```
 
+
+
 ### Status
 
 **COMPLETE**
 
 ---
 
+
+
 # DAY 15 — Data Ownership & `notFound()`
 
+
+
 # COMPLETED
+
+
 
 ### Completed
 
@@ -508,6 +640,8 @@ CustomerPage
 └── CustomerDetail(customer)
 ```
 
+
+
 ### Architectural lesson
 
 Pages can own:
@@ -520,25 +654,35 @@ Components can own:
 
 - presentation
 
+
+
 ### Status
 
 **COMPLETE**
 
 ---
 
+
+
 # REMAINING ROADMAP
+
+
 
 # DAY 1 — Advanced Error Boundaries
 
+
+
 ## Topics
 
-- [ ] Local error boundaries
-- [ ] Route-level vs component-level errors
-- [ ] Nested error boundaries
-- [ ] `reset()`
-- [ ] Error propagation
-- [ ] Suspense + error boundary together
-- [ ] Designing recoverable UI
+- [x] Local error boundaries
+- [x] Route-level vs component-level errors
+- [x] Nested error boundaries
+- [x] `reset()`
+- [x] Error propagation
+- [x] Suspense + error boundary together
+- [x] Designing recoverable UI
+
+
 
 ## CRM Task
 
@@ -570,13 +714,19 @@ Customer Page
    [Try again]
 ```
 
+
+
 ### Status
 
-**IN PROGRESS**
+**Completed**
 
 ---
 
+
+
 # DAY 2 — Advanced Routing & Proxy
+
+
 
 ## Topics
 
@@ -588,6 +738,8 @@ Customer Page
 - [ ] Route matching
 - [ ] Why Proxy is not authorization
 - [ ] Server-side authorization boundaries
+
+
 
 ## CRM Task
 
@@ -617,13 +769,19 @@ Server Action
 "Is this user allowed to perform this operation?"
 ```
 
+
+
 ### Status
 
 **PENDING**
 
 ---
 
+
+
 # DAY 3 — Advanced Database Architecture
+
+
 
 ## Topics
 
@@ -638,6 +796,8 @@ Server Action
 - [ ] `select`
 - [ ] `include`
 - [ ] Transaction boundaries
+
+
 
 ## CRM Task
 
@@ -661,13 +821,19 @@ meeting
 note
 ```
 
+
+
 ### Status
 
 **PENDING**
 
 ---
 
+
+
 # DAY 4 — API Route Handlers & Webhooks
+
+
 
 ## Topics
 
@@ -683,6 +849,8 @@ note
 - [ ] API authorization
 - [ ] Webhooks
 - [ ] Webhook verification
+
+
 
 ## CRM Task
 
@@ -707,7 +875,11 @@ for incoming external events.
 
 ---
 
+
+
 # DAY 5 — Client State & UI Architecture
+
+
 
 ## Topics
 
@@ -720,6 +892,8 @@ for incoming external events.
 - [ ] Filter state
 - [ ] Bulk selection
 - [ ] URL state vs React state
+
+
 
 ## CRM Task
 
@@ -747,11 +921,15 @@ Server data
 UI state
 ```
 
+
+
 ### Status
 
 **PENDING**
 
 ---
+
+
 
 # DAY 6 — Advanced Forms & Optimistic UI
 
@@ -770,6 +948,8 @@ This day is **not** about relearning them.
 - [ ] Optimistic deletion
 - [ ] Optimistic status changes
 
+
+
 ## CRM Task
 
 Implement something like:
@@ -786,13 +966,19 @@ Server Action
 Success / rollback
 ```
 
+
+
 ### Status
 
 **PENDING**
 
 ---
 
+
+
 # DAY 7 — Performance Optimization
+
+
 
 ## Topics
 
@@ -807,6 +993,8 @@ Success / rollback
 - [ ] Database query performance
 - [ ] Avoiding unnecessary requests
 - [ ] Avoiding waterfalls
+
+
 
 ## CRM Task
 
@@ -826,7 +1014,11 @@ and implement them.
 
 ---
 
+
+
 # DAY 8 — Security
+
+
 
 ## Topics
 
@@ -844,6 +1036,8 @@ and implement them.
 - [ ] Webhook verification
 - [ ] File upload security
 - [ ] Database security
+
+
 
 ## CRM Task
 
@@ -865,13 +1059,19 @@ API
 Database
 ```
 
+
+
 ### Status
 
 **PENDING**
 
 ---
 
+
+
 # DAY 9 — Testing
+
+
 
 ## Topics
 
@@ -883,6 +1083,8 @@ Database
 - [ ] Authorization testing
 - [ ] API testing
 - [ ] Error scenario testing
+
+
 
 ## CRM Tests
 
@@ -900,13 +1102,19 @@ Missing customer
 API failure
 ```
 
+
+
 ### Status
 
 **PENDING**
 
 ---
 
+
+
 # DAY 10 — Production Deployment & Architecture
+
+
 
 ## Topics
 
@@ -921,6 +1129,8 @@ API failure
 - [ ] HTTPS
 - [ ] Database backups
 - [ ] CI/CD basics
+
+
 
 ## CRM Task
 
@@ -938,11 +1148,15 @@ Next.js
 PostgreSQL
 ```
 
+
+
 ### Status
 
 **PENDING**
 
 ---
+
+
 
 # OPTIONAL DAY 11 — Real CRM Feature
 
@@ -974,6 +1188,8 @@ The goal is to see whether you can independently apply everything you've learned
 
 ---
 
+
+
 # OPTIONAL DAY 12 — Final Architecture Review
 
 Do a complete review of the project.
@@ -1002,9 +1218,15 @@ Then refactor anything that doesn't meet production standards.
 
 ---
 
+
+
 # CURRENT PROGRESS SUMMARY
 
+
+
 ## Completed
+
+
 
 ### Foundation
 
@@ -1016,6 +1238,8 @@ Then refactor anything that doesn't meet production standards.
 - [x] Client Components
 - [x] Reusable components
 
+
+
 ### Database
 
 - [x] Prisma
@@ -1023,6 +1247,8 @@ Then refactor anything that doesn't meet production standards.
 - [x] CRUD
 - [x] Service layer
 - [x] Validation
+
+
 
 ### Forms
 
@@ -1033,6 +1259,8 @@ Then refactor anything that doesn't meet production standards.
 - [x] Form errors
 - [x] Pending states
 - [x] Redirects
+
+
 
 ### Data
 
@@ -1047,6 +1275,8 @@ Then refactor anything that doesn't meet production standards.
 - [x] `updateTag`
 - [x] `revalidatePath`
 
+
+
 ### Rendering
 
 - [x] `loading.tsx`
@@ -1055,6 +1285,8 @@ Then refactor anything that doesn't meet production standards.
 - [x] Suspense
 - [x] Streaming
 - [x] Independent Suspense boundaries
+
+
 
 ### Authentication
 
@@ -1067,6 +1299,8 @@ Then refactor anything that doesn't meet production standards.
 - [x] Server-side authorization
 
 ---
+
+
 
 # Remaining
 

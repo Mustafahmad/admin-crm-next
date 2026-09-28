@@ -3,12 +3,14 @@ import DashboardShell from "@/components/DashboardShell";
 
 export default function DashboardLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
     <Suspense fallback={<DashboardLoading />}>
-      <DashboardShell>{children}</DashboardShell>
+      <DashboardShell>{children} {modal}</DashboardShell>
     </Suspense>
   );
 }
