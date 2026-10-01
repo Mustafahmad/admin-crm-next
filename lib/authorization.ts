@@ -1,12 +1,14 @@
 import { auth } from "./auth";
 import prisma from "./prisma";
 import { headers } from "next/headers";
-export async function requirePermission(
-    permissionName: string
-) {
 
+
+export async function requirePermission(permissionName: string) {
     const headersList = await headers();
-    const session = await auth.api.getSession({ headers: headersList });
+
+    const session = await auth.api.getSession({
+        headers: headersList,
+    });
 
     if (!session) {
         throw new Error("Unauthorized");
@@ -34,5 +36,5 @@ export async function requirePermission(
         throw new Error("Forbidden");
     }
 
-    return true;
+    return session;
 }

@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma";
-import { Customer } from "@prisma/client";
 import { cacheLife, cacheTag } from "next/cache";
 
 type DashboardStats = {
