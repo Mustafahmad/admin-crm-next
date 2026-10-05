@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { deleteCustomer } from "@/app/dashboard/customers/actions";
 import CustomerSearch from "@/components/customers/CustomerSearch";
 import { listCustomers } from "@/services/customer.service";
 import CustomerTable from "@/components/customers/CustomerTable";

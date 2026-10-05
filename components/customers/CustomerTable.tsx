@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
-
+import { useState, useTransition } from "react";
 import CustomerRow from "./CustomerRow";
+import { deleteCustomers } from "@/app/dashboard/customers/actions";
 
 type Customer = {
   id: string;
   email: string;
   name: string;
-  createdAt: Date;
+  createdAt: Date | string;
 };
 
 export default function CustomerTable({
@@ -17,9 +17,13 @@ export default function CustomerTable({
   customers: Customer[];
 }) {
   const [selectedCustomers, setSelectedCustomers] = useState<string[]>([]);
+  const [isPending, startTransition] = useTransition();
+
+  const allSelected =
+    customers.length > 0 && selectedCustomers.length === customers.length;
 
   const handleSelectAll = () => {
-    if (selectedCustomers.length === customers.length) {
+    if (allSelected) {
       setSelectedCustomers([]);
     } else {
       setSelectedCustomers(customers.map((customer) => customer.id));
@@ -38,18 +42,22 @@ export default function CustomerTable({
     setSelectedCustomers([]);
   };
 
-  const allSelected =
-    customers.length > 0 &&
-    selectedCustomers.length === customers.length;
+  const handleDeleteSelected = () => {
+    if (selectedCustomers.length === 0) return;
+
+    startTransition(async () => {
+      await deleteCustomers(selectedCustomers);
+      setSelectedCustomers([]);
+    });
+  };
 
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
-      {/* Bulk actions */}
-      <div className="flex min-h-14 items-center justify-between border-b border-border px-4 py-3">
+      <div className="flex min-h-16 items-center justify-between border-b border-border px-5 py-3">
         <div className="flex items-center gap-3">
           {selectedCustomers.length > 0 ? (
             <>
-              <span className="text-sm font-medium text-foreground">
+              <span className="rounded-md bg-surface-raised px-3 py-1.5 text-sm font-medium text-foreground">
                 {selectedCustomers.length} selected
               </span>
 
@@ -60,6 +68,15 @@ export default function CustomerTable({
               >
                 Deselect All
               </button>
+
+              <button
+                type="button"
+                onClick={handleDeleteSelected}
+                disabled={isPending}
+                className="rounded-md bg-red-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-50"
+              >
+                {isPending ? "Deleting..." : "Delete Selected"}
+              </button>
             </>
           ) : (
             <span className="text-sm text-muted">
@@ -67,24 +84,27 @@ export default function CustomerTable({
             </span>
           )}
         </div>
+
+        {selectedCustomers.length > 0 && (
+          <span className="text-xs text-muted">
+            {selectedCustomers.length} customer
+            {selectedCustomers.length !== 1 ? "s" : ""} selected
+          </span>
+        )}
       </div>
 
       <div className="overflow-x-auto">
         <table className="w-full min-w-[700px]">
           <thead className="border-b border-border bg-surface-raised">
             <tr>
-              <th className="px-6 py-3 text-left">
-                <label className="flex cursor-pointer items-center gap-2">
+              <th className="w-14 px-6 py-3 text-left">
+                <label className="flex cursor-pointer items-center">
                   <input
                     type="checkbox"
                     checked={allSelected}
                     onChange={handleSelectAll}
                     className="h-4 w-4 cursor-pointer rounded border-border accent-accent-strong"
                   />
-
-                  <span className="text-sm font-medium text-muted">
-                    Select All
-                  </span>
                 </label>
               </th>
 
@@ -124,8 +144,8 @@ export default function CustomerTable({
                   colSpan={5}
                   className="px-6 py-3 text-sm font-medium text-muted"
                 >
-                  Selected {selectedCustomers.length} customer
-                  {selectedCustomers.length !== 1 ? "s" : ""}
+                  {selectedCustomers.length} customer
+                  {selectedCustomers.length !== 1 ? "s" : ""} selected
                 </td>
               </tr>
             </tfoot>

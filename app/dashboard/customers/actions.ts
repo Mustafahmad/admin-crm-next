@@ -82,3 +82,13 @@ export async function deleteCustomer(formData: FormData) {
   revalidatePath("/dashboard/customers");
   redirect("/dashboard/customers");
 }
+
+export async function deleteCustomers(ids: string[]) {
+  if (ids.length === 0) return;
+
+  await requirePermission("customer.delete");
+  await customerService.deleteCustomers(ids);
+  updateTag("dashboard-stats");
+  revalidatePath("/dashboard/customers");
+}
+

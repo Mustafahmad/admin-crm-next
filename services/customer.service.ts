@@ -90,3 +90,10 @@ export async function deleteCustomer(id: string) {
     where: { id },
   });
 }
+
+
+export async function deleteCustomers(ids: string[]) {
+  await prisma.customer.deleteMany({
+    where: { id: { in: ids } },
+  });
+}

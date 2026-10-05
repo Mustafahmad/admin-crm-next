@@ -13,7 +13,7 @@ export default function CustomerRow({
     id: string;
     name: string;
     email: string;
-    createdAt: Date;
+    createdAt: Date | string;
   };
   checked: boolean;
   onToggle: () => void;
@@ -40,7 +40,7 @@ export default function CustomerRow({
       </td>
 
       <td className="px-6 py-4 text-sm text-muted">
-        {customer.createdAt.toLocaleDateString()}
+        {new Date(customer.createdAt).toLocaleDateString()}
       </td>
 
       <td className="px-6 py-4 text-sm">
