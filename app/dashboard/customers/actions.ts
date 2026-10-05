@@ -84,11 +84,28 @@ export async function deleteCustomer(formData: FormData) {
 }
 
 export async function deleteCustomers(ids: string[]) {
-  if (ids.length === 0) return;
+  if (ids.length === 0) {
+    return { success: false, message: "No customers selected." };
+  }
 
-  await requirePermission("customer.delete");
-  await customerService.deleteCustomers(ids);
-  updateTag("dashboard-stats");
-  revalidatePath("/dashboard/customers");
+  try {
+    await requirePermission("customer.delete");
+    await customerService.deleteCustomers(ids);
+    updateTag("dashboard-stats");
+    revalidatePath("/dashboard/customers");
+
+    const count = ids.length;
+    return {
+      success: true,
+      message:
+        count === 1
+          ? "Customer deleted successfully."
+          : `${count} customers deleted successfully.`,
+    };
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unable to delete customers.";
+    return { success: false, message };
+  }
 }
 

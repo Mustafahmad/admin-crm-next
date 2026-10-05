@@ -3,6 +3,7 @@
 import { useOptimistic, useState, useTransition } from "react";
 import CustomerRow from "./CustomerRow";
 import { deleteCustomers } from "@/app/dashboard/customers/actions";
+import { toast } from "sonner";
 
 type Customer = {
   id: string;
@@ -28,13 +29,14 @@ export default function CustomerTable({
   );
 
   const allSelected =
-    customers.length > 0 && selectedCustomers.length === customers.length;
+    optimisticCustomers.length > 0 &&
+    selectedCustomers.length === optimisticCustomers.length;
 
   const handleSelectAll = () => {
     if (allSelected) {
       setSelectedCustomers([]);
     } else {
-      setSelectedCustomers(customers.map((customer) => customer.id));
+      setSelectedCustomers(optimisticCustomers.map((customer) => customer.id));
     }
   };
 
@@ -51,10 +53,27 @@ export default function CustomerTable({
   };
 
   const handleDeleteSelected = () => {
+    if (selectedCustomers.length === 0) return;
+  
     startTransition(async () => {
-      removeOptimistically(selectedCustomers);
-      await deleteCustomers(selectedCustomers);
-      setSelectedCustomers([]);
+      const ids = [...selectedCustomers];
+  
+      removeOptimistically(ids);
+  
+      try {
+        const result = await deleteCustomers(ids);
+  
+        if (!result?.success) {
+          toast.error(result?.message ?? "Unable to delete customers.");
+          return;
+        }
+
+        setSelectedCustomers([]);
+        toast.success(result.message);
+      } catch (error) {
+        console.error("Delete customers failed:", error);
+        toast.error("Unable to delete customers. Please try again.");
+      }
     });
   };
 
