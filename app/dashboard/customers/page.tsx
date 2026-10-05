@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { deleteCustomer } from "@/app/dashboard/customers/actions";
 import CustomerSearch from "@/components/customers/CustomerSearch";
 import { listCustomers } from "@/services/customer.service";
+import CustomerTable from "@/components/customers/CustomerTable";
 
 export default async function CustomersPage({
   searchParams,
@@ -37,72 +38,7 @@ export default async function CustomersPage({
           <CustomerSearch />
         </Suspense>
       </div>
-
-      <div className="overflow-hidden rounded-xl border border-border bg-surface">
-        <table className="w-full">
-          <thead className="border-b border-border bg-surface-raised">
-            <tr>
-              <th className="px-6 py-3 text-left text-sm font-medium text-muted">
-                Name
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-muted">
-                Email
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-muted">
-                Created
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-muted">
-                Actions
-              </th>
-            </tr>
-          </thead>
-
-          <tbody className="divide-y divide-border">
-            {customers.map((customer) => (
-              <tr key={customer.id}>
-                <td className="px-6 py-4 text-sm font-medium text-foreground">
-                  {customer.name}
-                </td>
-                <td className="px-6 py-4 text-sm text-muted">{customer.email}</td>
-                <td className="px-6 py-4 text-sm text-muted">
-                  {customer.createdAt.toLocaleDateString()}
-                </td>
-                <td className="px-6 py-4 text-sm">
-                  <Link
-                    href={`/dashboard/customers/${customer.id}/edit`}
-                    className="mr-3 font-medium text-accent hover:underline"
-                  >
-                    Edit
-                  </Link>
-                  <Link
-                    href={`/dashboard/customers/${customer.id}`}
-                    className="mr-3 font-medium text-accent hover:underline"
-                  >
-                    View
-                  </Link>
-                  <form action={deleteCustomer} className="inline">
-                    <input type="hidden" name="id" value={customer.id} />
-                    <button
-                      type="submit"
-                      className="font-medium text-danger hover:underline"
-                    >
-                      Delete
-                    </button>
-                  </form>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        {customers.length === 0 && (
-          <div className="px-6 py-10 text-center text-sm text-muted">
-            {search?.trim()
-              ? "No customers match your search."
-              : "No customers found."}
-          </div>
-        )}
-      </div>
+      <CustomerTable customers={customers} />
     </div>
   );
 }
