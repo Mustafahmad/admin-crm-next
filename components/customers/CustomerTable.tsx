@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useOptimistic, useState, useTransition } from "react";
 import CustomerRow from "./CustomerRow";
 import { deleteCustomers } from "@/app/dashboard/customers/actions";
 
@@ -18,6 +18,14 @@ export default function CustomerTable({
 }) {
   const [selectedCustomers, setSelectedCustomers] = useState<string[]>([]);
   const [isPending, startTransition] = useTransition();
+  const [optimisticCustomers, removeOptimistically] = useOptimistic(
+    customers,
+    (currentCustomers, idsToRemove: string[]) => {
+      return currentCustomers.filter(
+        (customer) => !idsToRemove.includes(customer.id),
+      );
+    },
+  );
 
   const allSelected =
     customers.length > 0 && selectedCustomers.length === customers.length;
@@ -43,9 +51,8 @@ export default function CustomerTable({
   };
 
   const handleDeleteSelected = () => {
-    if (selectedCustomers.length === 0) return;
-
     startTransition(async () => {
+      removeOptimistically(selectedCustomers);
       await deleteCustomers(selectedCustomers);
       setSelectedCustomers([]);
     });
@@ -127,7 +134,7 @@ export default function CustomerTable({
           </thead>
 
           <tbody className="divide-y divide-border bg-surface">
-            {customers.map((customer) => (
+            {optimisticCustomers.map((customer) => (
               <CustomerRow
                 key={customer.id}
                 customer={customer}
